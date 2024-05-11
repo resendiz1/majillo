@@ -16,3 +16,4 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/',[cargarController::class, 'inicio'] )->name('inicio');
 Route::post('/excel_cargado', [cargarController::class, 'cargar_excel'])->name('cargar.excel');
+Route::get('/trabajador_detalle/{trabajador}', [cargarController::class,'detalle_trabajador'])->name('detalle.trabajador');
