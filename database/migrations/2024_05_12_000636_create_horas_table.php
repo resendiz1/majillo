@@ -11,14 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('excel', function (Blueprint $table) {
+        Schema::create('horas', function (Blueprint $table) {
             $table->id();
-            $table->string('tiempo');
-            $table->string('nombre');
-            $table->string('id_trabajador');
-            $table->string('codigo_pago')->nulleable()->defautl('nothing');
-            $table->string('estado_trabajo');
-            $table->string('nombre_terminal');
+            $table->string('hora');
+            $table->string('fecha');
+            $table->bigInteger('id_trabajador');
             $table->timestamps();
         });
     }
@@ -28,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('excel');
+        Schema::dropIfExists('horas');
     }
 };
