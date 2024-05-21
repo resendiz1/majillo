@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('tiempo');
             $table->string('nombre');
             $table->string('id_trabajador');
-            $table->string('codigo_pago')->nulleable()->defautl('nothing');
+            $table->string('codigo_pago')->nullable();
             $table->string('estado_trabajo');
             $table->string('nombre_terminal');
             $table->timestamps();

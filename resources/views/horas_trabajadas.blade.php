@@ -50,6 +50,9 @@
             <div class="col-sm-12 col-md-12 col-lg-3 text-center p-4 h5">
                 Checadas: <br> {{count($horas)}}
             </div>
+            <div class="col-sm-12 col-md-12 col-lg-3 text-center p-4 h5">
+              pendi
+            </div>
         </div>
     </div>
 

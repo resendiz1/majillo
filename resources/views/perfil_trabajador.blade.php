@@ -1,5 +1,6 @@
 @php
 use Illuminate\Support\Facades\Crypt;
+use Carbon\Carbon;
     
 @endphp
 @extends('plantilla')
@@ -18,14 +19,18 @@ use Illuminate\Support\Facades\Crypt;
 <div class="container">
     <div class="row justify-content-center">
         @forelse ($dias_trabajados as $dia)
-            <div class="col-3 m-3 border text-center">
+            <div class="col-3 m-3 border text-center p-4">
                 <div class="row">
                     <div class="col-12">
                         @php
+                            
                             $fecha = Crypt::encryptString($dia->fecha);
+                            $format_fecha = Carbon::createFromFormat('d/m/Y', $dia->fecha);
+                            $fecha_larga = $format_fecha->format(" j \\d\\e F \\d\\e Y")
+
                         @endphp
                         <a href="{{route('horas.trabajadas',['id_trabajador' => $trabajador_detalle[0]->id_trabajador, 'fecha' => $fecha])}}">
-                            {{$dia->fecha}}
+                            {{$fecha_larga}}
                         </a>
                     </div>
                 </div>

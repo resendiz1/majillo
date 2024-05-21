@@ -76,8 +76,8 @@ class cargarController extends Controller
         $horas_trabajadas = $hora_entrada->diff($hora_salida);
 
         //formateando las horas obtenidas para saber cuantas checadas estan entra la entrada y la salida
-        $hora_entrada_formateado = $hora_entrada->format("H:m"); 
-        $hora_salida_formateado = $hora_salida->format("H:m");
+        // $hora_entrada_formateado = $hora_entrada->format("H:m"); 
+        // $hora_salida_formateado = $hora_salida->format("H:m");
 
         //comparando la entrada para saber si hay retardo, lo hago aqui para que la vista se pueda usar con todos los turnos
         $retardo = 'Sin retardo';
@@ -86,15 +86,45 @@ class cargarController extends Controller
             $retardo = 'Retardo';
         }
 
+        //consultando las horas en las que checo el trabajador
+
+         $checadas = DB::select("SELECT hora FROM divididos WHERE id_trabajador LIKE $id_trabajador AND fecha LIKE '$fecha_decod' ");
+        
+        
+    for($i=0 ; $i < count($checadas) ; $i++ ){
+ 
+        // $diferencia entre la entrada y la segunda checada, todo esto se va a 
+        $checadas_formateadas = new DateTime(($checadas[$i]->hora));
+                
+        $diff = $hora_entrada->diff($checadas_formateadas)->format('%H:%I');
+
+        if($diff > '03:00'){
+            //Se toma la primer checada que tenga mas de 3 horas de diferencia con la primera para tomarla como hora para comer
+            echo $diff;
+
+
+
+        }
+
+    }
+
+
+
+
 
         //de las horas que estan entre la entrada y la salida debo tomar la primer hora despues de la entrada y compararla, si esta a una hora o menos de distancia entonces se procede a tomar la hora siguiente y asi hasta encontrar una que este mas alla de la hora, encontrando esa hora entonces la tomamos como inicio de hora de comida, y empezamos a tomar fechas al reves, esta vez tomamos como referencia la hora de salida y realizamos la comprobacion, si la hora tomara una checada antes de la salida esta a menos de una hora de distancia de la salida, entonces la descartamos y vamos por la siguiente.
 
         //con eso sacamos la hora de entrada y salida de comida del horario administrativo
 
 
-        //obteniendo las checadas que entan dentro de la checada de inicio y la checada de fin
-         $checadas_dia = DB::select("SELECT hora FROM divididos WHERE id_trabajador LIKE $id_trabajador AND fecha LIKE '$fecha_decod' AND hora BETWEEN '$hora_entrada_formateado' AND '$hora_salida_formateado' ");
+        
 
+
+
+
+
+
+    
    
         //TODO ESTE CODIGO VA A SER PARA EL PERSONAL CON HORARIO ADMINISTRATIVO
 
