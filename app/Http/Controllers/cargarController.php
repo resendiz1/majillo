@@ -91,23 +91,33 @@ class cargarController extends Controller
          $checadas = DB::select("SELECT hora FROM divididos WHERE id_trabajador LIKE $id_trabajador AND fecha LIKE '$fecha_decod' ");
         
         
+    //loop para saber a que hora se fue a comer     
     for($i=0 ; $i < count($checadas) ; $i++ ){
  
-        // $diferencia entre la entrada y la segunda checada, todo esto se va a 
-        $checadas_formateadas = new DateTime(($checadas[$i]->hora));
-                
+        // $diferencia entre la entrada y la segunda checada, o tercera dependiendo de cual cumpla los criterios
+        $checadas_formateadas = new DateTime($checadas[$i]->hora);   
         $diff = $hora_entrada->diff($checadas_formateadas)->format('%H:%I');
 
         if($diff > '03:00'){
             //Se toma la primer checada que tenga mas de 3 horas de diferencia con la primera para tomarla como hora para comer
-            echo $diff;
-
-
-
+            $inicio_comida =  $checadas_formateadas->format('H:i');
+            $inicio_hora_comida = new DateTime($inicio_comida);
+            break;
         }
 
     }
 
+
+    //loop para saber a que hora regresa de comer
+    for($j=0 ; $j < count($checadas); $j++ ){
+        echo $checadas[$i]->hora;
+         $checadas_formateadas->format('H:i'). '<br>';
+         $diff = $inicio_hora_comida->diff($hora_salida);
+         $diff->format('%H:%i');
+
+    }
+
+        // echo $inicio_hora_comida;
 
 
 
