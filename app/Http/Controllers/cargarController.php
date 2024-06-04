@@ -108,14 +108,29 @@ class cargarController extends Controller
     }
 
 
+    echo $inicio_comida;
+
     //loop para saber a que hora regresa de comer
     for($j=0 ; $j < count($checadas); $j++ ){
-        echo $checadas[$i]->hora;
-         $checadas_formateadas->format('H:i'). '<br>';
-         $diff = $inicio_hora_comida->diff($hora_salida);
-         $diff->format('%H:%i');
+        
+        
+        $checadas_formateadas = new DateTime($checadas[$j]->hora); 
+         $diff2 = $inicio_hora_comida->diff($hora_salida)->format('%H:%i');
+
+         $fin_comida = null;
+        echo $diff2. '<br>';
+
+        if($diff2 >= '01:00'){
+            //Se toma la primer checada que tenga mas de 3 horas de diferencia con la primera para tomarla como hora para comer
+            $fin_comida =  $checadas_formateadas->format('H:i');
+            $fin_hora_comida = new DateTime($fin_comida);
+            break;
+        }
+     
 
     }
+
+
 
         // echo $inicio_hora_comida;
 
